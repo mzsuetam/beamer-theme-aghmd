@@ -1,0 +1,198 @@
+\ProvidesPackage{beamerthemeAGHMM}[2024/02/03]
+
+% \RequirePackage{tikz}[2015/08/07]
+
+\RequirePackage{ifthen}
+% \usetikzlibrary{positioning}
+
+% Declarations
+\newdimen\textleftmargin   %Left margin of a the text area
+\newdimen\textrightmargin  %Right margin of a the text area
+\textleftmargin=2em
+\textrightmargin=6em
+
+%%%
+% \newif\ifAGH@dark
+% \AGH@darkfalse %Default, do not use dark version
+% \newif\ifAGH@titlepage
+% \AGH@titlepagetrue %Default, show title page
+% \DeclareOptionBeamer{dark}{
+% 	\AGH@darktrue %Use dark version if option 'dark' was given
+% 	\PassOptionsToPackage{dark=#1}{beamercolorthemeAGH} %Pass information about the level of darkness to the 'beamercolorthemeAGH.sty' file
+% }
+%%%
+\DeclareOptionBeamer{margins}{ %Option 'margins' specifies the size of the text left and right margin
+	\textleftmargin=#1
+	\textrightmargin=#1
+}
+%%%
+% \DeclareOptionBeamer{parttitle}{\def\AGH@parttitle{#1}} %Option 'parttitle' specifies where part title should be displayed, values:
+% % 'leftfooter' - in left footer, instead of author's name
+% % 'rightfooter' - in right footer, instead of date
+% %%%
+% \newif\ifAGH@sidebar
+% \AGH@sidebartrue %Default, show AGH sidebar on non-title slides 
+% \DeclareOptionBeamer{nosidebar}{
+% 	\AGH@sidebarfalse % Do not display sidebar on non-title slides if option'nosidebar' was given
+% }
+%%%
+% \ProcessOptionsBeamer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
+% \useinnertheme[shadow=\ifAGH@dark false\else true\fi]{rounded}
+% % \useoutertheme{infolines}
+
+\usecolortheme{AGHMM}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{agh-beamer-template.png}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Boadilla theme
+
+% \ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/themes/theme/beamerthemeBoadilla.sty,v 1.2 2007/01/28 20:48:30 tantau Exp $
+
+% \mode<presentation>
+
+% \newif\ifbeamer@secheader
+% \beamer@secheaderfalse
+
+% \DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+% \ProcessOptionsBeamer
+
+% \usecolortheme{rose}
+% \usecolortheme{dolphin}
+\useoutertheme{infolines}
+
+\useinnertheme{rectangles}
+% \useinnertheme[shadow=False]{rounded}
+% instead of full rounded, 
+% \setbeamertemplate{items}[ball]
+% \setbeamertemplate{sections/subsections in toc}[ball]
+
+    
+% \setbeamertemplate{headline}[default] % this was in use instead of secheader
+% % it uses the following definition:
+
+\setbeamertemplate{frametitle}
+{%
+% default frametitle template
+% https://github.com/josephwright/beamer/blob/main/base/themes/outer/beamerouterthemedefault.sty
+\vspace{-2.3em} % added, should be same as in headline
+\ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+\@tempdima=\textwidth%
+\advance\@tempdima by\beamer@leftmargin%
+\advance\@tempdima by\beamer@rightmargin%
+\begin{beamercolorbox}[sep=0.3cm,left,wd=\the\@tempdima]{frametitle}
+    \usebeamerfont{frametitle}%
+    \vbox{}\vskip-1ex%
+    \if@tempswa\else\csname beamer@fteleft\endcsname\fi%
+    \strut\insertframetitle\strut\par%
+    {%
+      \ifx\insertframesubtitle\@empty%
+      \else%
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle\strut\par}%
+      \fi
+      }%
+      \vskip-1ex%
+      \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+    \end{beamercolorbox}%
+  \vspace{1em} % added
+}
+  
+\setbeamertemplate{frametitle continuation}{
+    \insertcontinuationcountroman
+    \vspace{1em} % added
+}
+
+\setbeamertemplate{headline}
+{%
+  
+%   \leavevmode%
+%   \hbox{%
+%   \usebeamerfont{section in head/foot}%
+%   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.65ex,dp=1.5ex,right]{section in head/foot}%
+%     \usebeamerfont{headline}\usebeamerfont{section in head/foot}\usebeamertemplate{section in head/foot}\hspace*{2ex}
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.65ex,dp=1.5ex,left]{subsection in head/foot}%
+%     \usebeamerfont{headline}\usebeamerfont{subsection in head/foot}\hspace*{2ex}\usebeamertemplate{subsection in head/foot}
+%   \end{beamercolorbox}}%
+%   \vskip0pt%
+    \vspace{6em}
+}
+
+\setbeamertemplate{footline} 
+{%
+% infolines theme footer
+% https://github.com/josephwright/beamer/blob/main/base/themes/outer/beamerouterthemeinfolines.sty
+\vspace{4em} % added  
+\leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor\expandafter\ifblank\expandafter{\beamer@shortinstitute}{}{~~(\insertshortinstitute)}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,leftskip=2ex,rightskip=2ex,sep=0pt]{date in head/foot}%
+    \hfill%
+    \usebeamerfont{date in head/foot}%
+    \insertshortdate{}%
+    \hfill%
+    \usebeamercolor[fg]{page number in head/foot}%
+    \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate{page number in head/foot}%
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+
+% https://github.com/josephwright/beamer/blob/main/base/themes/inner/beamerinnerthemedefault.sty
+% Section page: default
+
+
+\setbeamertemplate{section page}
+{
+    % \vspace{5em} % added
+  \begingroup
+    \centering
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}
+        % \sectionname~\insertsectionnumber % removed
+    }
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center,center]{section title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \endgroup
+}
+% Subection page: default
+\setbeamertemplate{subsection page}
+{   
+    % \vspace{5em} % added
+  \begingroup
+    \centering
+    {\usebeamerfont{subsection name}\usebeamercolor[fg]{subsection name}
+        % \subsectionname~\insertsubsectionnumber % removed
+    }
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,center]{subsection title}
+      \usebeamerfont{subsection title}\insertsubsection\par
+    \end{beamercolorbox}
+  \endgroup
+}
+
+
+\usesubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{$\blacktriangleright$}%
+}
+\usesubsubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{$\bullet$}%
+}
+
+
+\setbeamersize{text margin left=\textleftmargin, text margin right=\textrightmargin}
+
+% \ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi % we replace headline
+
+\mode
+<all>

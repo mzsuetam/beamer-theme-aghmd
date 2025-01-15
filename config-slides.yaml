@@ -1,0 +1,19 @@
+title: AGHMM
+subtitle: AGH Theme for Markdown Beamer Presentations
+shorttitle: AGHMM Beamer Theme
+author: Mateusz Mazur
+institute: |
+  Wydział Elektrotechniki, Automatyki, Informatyki i Inżynierii Biomedycznej, AGH \
+  Kierunek studiów: Informatyka i Systemy Inteligentne
+shortinstitute: ISI, EAIiIB, AGH
+date: \today
+
+lang: en-US # pl-PL # sudo apt install texlive-lang-polish
+fontsize: 10pt
+aspectratio: 169
+theme: "AGHMM"
+link-citations: true
+# linkstyle: bold
+section-titles: true
+header-includes:
+  - \setbeamertemplate{frametitle continuation}{}
