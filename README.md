@@ -2,6 +2,8 @@
 
 **AGHMM** is a LaTeX Beamer theme designed to be used with the [Pandoc](https://pandoc.org/) document converter.
 
+![](src/img/title-slide.jpg)
+
 ## Credits
 
 Theme is based on:
