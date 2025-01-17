@@ -1,7 +1,10 @@
 title: AGHMM
 subtitle: AGH Theme for Markdown Beamer Presentations
 shorttitle: AGHMM Beamer Theme
-author: Mateusz Mazur
+author:  |
+  Mateusz Mazur \
+  \footnotesize Supervisors: no one. Ihavetodo Everythingmyself
+shortauthor: Mateusz Mazur
 institute: |
   Wydział Elektrotechniki, Automatyki, Informatyki i Inżynierii Biomedycznej, AGH \
   Kierunek studiów: Informatyka i Systemy Inteligentne
