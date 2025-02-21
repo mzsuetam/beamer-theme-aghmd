@@ -2,7 +2,7 @@ pdf:
 	cd src/ && \
 	pandoc -t beamer *.md -o ../out/slides-latest.pdf \
 	--metadata-file=../config-slides.yaml \
-	-F ../pandoc-crossref \
+	-F pandoc-crossref \
 	--slide-level=2 \
 	--citeproc \
 	--bibliography=bibliography.bib \
