@@ -3,6 +3,7 @@ pdf:
 	pandoc -t beamer *.md -o ../out/slides-latest.pdf \
 	--metadata-file=../config-slides.yaml \
 	-F pandoc-crossref \
+	-L ../filters/lang-filter.lua \
 	--slide-level=2 \
 	--citeproc \
 	--bibliography=bibliography.bib \

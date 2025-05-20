@@ -7,7 +7,5 @@
 
 ---
 
-\begin{center}
-\usebeamerfont*{frametitle} \usebeamercolor[bg]{frametitle}  
-Thank you for your attention
-\end{center}
+::: {#thank-you-tile-text .big-color}
+:::

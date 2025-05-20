@@ -7,9 +7,8 @@
 
 ---
 
-\begin{center}
-\usebeamerfont*{frametitle} \usebeamercolor[bg]{frametitle}  
-Questions?
-\end{center}
+::: {#questions-tile-text .big-color}
+:::
+
 
 
