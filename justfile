@@ -1,7 +1,7 @@
-pdf src="src" out="slides-latest":
+pdf src="src" out="slides-latest" outdir="out":
     cd {{src}} && \
     pandoc -t beamer *.md \
-    -o ../out/{{out}}.pdf \
+    -o ../{{outdir}}/{{out}}.pdf \
     --metadata-file=config-slides.yaml \
     -F pandoc-crossref \
     -L ../filters/lang-filter.lua \
