@@ -9,8 +9,11 @@ pdf src="src" out="slides-latest" outdir="out":
     --bibliography=bibliography.bib \
     --csl=../csl/acm-sig-proceedings-long-author-list.csl
 
+TEXMFHOME := `kpsewhich -var-value=TEXMFHOME`
+
 install-aghmd:
-	@echo "Copying AGHMD theme to ~/texmf/tex/latex/beamer/ directory..."
-	@mkdir -p ~/texmf/tex/latex/beamer/
-	@cp -r AGHMD ~/texmf/tex/latex/beamer/
-	@echo "Done!"
+    @echo "Copying AGHMD theme to {{TEXMFHOME}}/tex/latex/beamer/ directory..."
+    @mkdir -p {{TEXMFHOME}}/tex/latex/beamer/
+    @cp -r AGHMD {{TEXMFHOME}}/tex/latex/beamer/
+    mktexlsr {{TEXMFHOME}}
+    @echo "Done!"
