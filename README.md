@@ -1,6 +1,6 @@
-# AGHMM - AGH Theme for Markdown Beamer Presentations
+# AGHMD - AGH Theme for Markdown Beamer Presentations
 
-**AGHMM** is a LaTeX Beamer theme designed to be used with the [Pandoc](https://pandoc.org/) document converter.
+**AGHMD** is a LaTeX Beamer theme designed to be used with the [Pandoc](https://pandoc.org/) document converter.
 
 ![](src/img/title-slide.jpg)
 
@@ -37,8 +37,16 @@ Final PDF file presenting all the possibilities is saved in the `out` directory 
 
 - [Pandoc](https://pandoc.org/) (tested with version 3.6)
 - [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref) (tested with version 3.6)
+- [texlive-lang-polish](https://packages.debian.org/sid/tex/texlive-lang-polish) package for Polish language support (optional, for Polish language)
+- [just](https://github.com/casey/just) (for running commands, optional but recommended)
 
 ## Usage
+
+### Theme installation
+
+To install the AGHMD theme, run the command `just install-aghmd`. This will copy the theme files to the appropriate directory.
+
+### Presentation configuration
 
 Slides configuration and metadata can be changed in a `src/00-config.md` file.
 
@@ -47,6 +55,6 @@ they will be concatenated in the order of their names. As Pandoc concatenates fi
 
 The assets linked in the files also should be placed in the `src` directory and the paths should be relative to it.
 
-To install the AGHMM theme, run the command `just install-aghmm`. This will copy the theme files to the appropriate directory.
+### Presentation compilation
 
 To compile the presentation, run the command `just pdf`. The output will be saved in the `out` directory as `slides-latest.pdf`. The source files folder, output folder and the output file name can be changed using the `src`, `outdir` and `out` variables in the `justfile`.
