@@ -1,3 +1,4 @@
+---
 title: AGHMM
 subtitle: AGH Theme for Markdown Beamer Presentations
 shorttitle: AGHMM Beamer Theme
@@ -20,3 +21,4 @@ link-citations: true
 section-titles: true
 header-includes:
   - \setbeamertemplate{frametitle continuation}{}
+---
