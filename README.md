@@ -2,7 +2,7 @@
 
 **AGHMD** is a LaTeX Beamer theme designed to be used with the [Pandoc](https://pandoc.org/) document converter.
 
-![](src/img/title-slide.jpg)
+![](src/img/title-slide.png)
 
 ## Credits
 
