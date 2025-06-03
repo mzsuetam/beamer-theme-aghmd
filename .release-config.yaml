@@ -6,6 +6,7 @@ release:
       - csl
       - filters
       - justfile
+      - highlight-styles
       - src/
     exclude:
       - src/img/*
