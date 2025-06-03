@@ -30,19 +30,31 @@ jobs:
       - name: Prepare Slides Structure ZIP
         run: |
           mkdir -p slides-structure
-          cp -r csl slides-structure/
-          cp -r filters slides-structure/
-          # cp -r highlight-styles slides-structure/
-          cp justfile slides-structure/
-          mkdir -p slides-structure/src/img
-          cp src/*.md src/bibliography.bib slides-structure/src/
+
+          INCLUDE=$(yq '.release.slides_structure.include[]' .release-config.yaml)
+          for path in $INCLUDE; do
+            cp -r "$path" slides-structure/
+          done
+          EXCLUDE=$(yq '.release.slides_structure.exclude[]' .release-config.yaml)
+          for path in $EXCLUDE; do
+            rm -rf "slides-structure/$path" || true
+          done
+          
           cd slides-structure && zip -r ../slides-structure.zip .
 
       - name: Prepare AGHMD Beamer Theme ZIP
         run: |
           mkdir -p beamer-theme-aghmd
-          cp justfile beamer-theme-aghmd/
-          cp -r AGHMD beamer-theme-aghmd/
+          
+          INCLUDE=$(yq '.release.aghmd_beamer_theme.include[]' .release-config.yaml)
+          for path in $INCLUDE; do
+            cp -r "$path" beamer-theme-aghmd/
+          done
+          EXCLUDE=$(yq '.release.aghmd_beamer_theme.exclude[]' .release-config.yaml)
+          for path in $EXCLUDE; do
+            rm -rf "beamer-theme-aghmd/$path" || true
+          done
+          
           cd beamer-theme-aghmd && zip -r ../beamer-theme-aghmd.zip .
 
       - name: Create Git tag for combined release
