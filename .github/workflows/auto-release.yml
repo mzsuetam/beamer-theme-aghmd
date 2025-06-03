@@ -68,7 +68,7 @@ jobs:
           cd release-2 && zip -r ../release-2-${{ steps.version.outputs.version }}.zip .
 
       - name: Create Git tag for Release 2
-        if: steps.aghmd_check.outputs.changed == 'true'
+        # if: steps.aghmd_check.outputs.changed == 'true'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
@@ -76,7 +76,7 @@ jobs:
           git push origin release-2-v${{ steps.version.outputs.version }}
 
       - name: Create GitHub Release 2
-        if: steps.aghmd_check.outputs.changed == 'true'
+        # if: steps.aghmd_check.outputs.changed == 'true'
         uses: softprops/action-gh-release@v2
         with:
           name: "Release 2 - v${{ steps.version.outputs.version }}"
