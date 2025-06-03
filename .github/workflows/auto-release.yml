@@ -36,13 +36,14 @@ jobs:
           cp justfile slides-structure/
           mkdir -p slides-structure/src/img
           cp src/*.md src/bibliography.bib slides-structure/src/
-          cd slides-structure && zip -r ../slides-structure-${{ steps.version.outputs.version }}.zip .
+          cd slides-structure && zip -r ../slides-structure.zip .
 
       - name: Prepare AGHMD Beamer Theme ZIP
         run: |
-          mkdir -p aghmd-beamer-theme
-          cp -r AGHMD aghmd-beamer-theme/
-          cd aghmd-beamer-theme && zip -r ../aghmd-beamer-theme-${{ steps.version.outputs.version }}.zip .
+          mkdir -p beamer-theme-aghmd
+          cp justfile beamer-theme-aghmd/
+          cp -r AGHMD beamer-theme-aghmd/
+          cd beamer-theme-aghmd && zip -r ../beamer-theme-aghmd.zip .
 
       - name: Create Git tag for combined release
         run: |
@@ -60,7 +61,7 @@ jobs:
           name: "Combined Release - v${{ steps.version.outputs.version }}"
           tag_name: "combined-release-v${{ steps.version.outputs.version }}"
           files: |
-            slides-structure-${{ steps.version.outputs.version }}.zip
-            aghmd-beamer-theme-${{ steps.version.outputs.version }}.zip
+            slides-structure.zip
+            beamer-theme-aghmd.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
