@@ -60,7 +60,7 @@ jobs:
           fi
 
       - name: Prepare and Zip Release 2 (AGHMD)
-        if: steps.aghmd_check.outputs.changed == 'true'
+        # if: steps.aghmd_check.outputs.changed == 'true'
         run: |
           mkdir -p release-2
           cp -r AGHMD release-2/
