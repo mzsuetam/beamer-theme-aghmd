@@ -2,7 +2,7 @@ name: Auto Create Combined Release
 
 on:
   push:
-    branches: [ feature/auto-release ]
+    branches: [ main ]
 
 jobs:
   create-release:
