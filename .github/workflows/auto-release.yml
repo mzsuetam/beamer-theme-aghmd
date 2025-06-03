@@ -1,0 +1,79 @@
+name: Auto Create Combined Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install yq for YAML parsing
+        run: |
+          YQ_VERSION=v4.45.1
+          wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
+          chmod +x /usr/local/bin/yq
+
+
+      - name: Read major version and generate date-based minor version
+        id: version
+        run: |
+          MAJOR=$(yq '.major' .release-config.yaml)
+          DATE=$(date +%y%m%d)
+          TIME=$(date +%H%M)
+          echo "version=${MAJOR}.${DATE}.${TIME}" >> $GITHUB_OUTPUT
+
+      - name: Prepare Slides Structure ZIP
+        run: |
+          mkdir -p slides-structure
+
+          INCLUDE=$(yq '.release.slides_structure.include[]' .release-config.yaml)
+          for path in $INCLUDE; do
+            cp -r "$path" slides-structure/
+          done
+          EXCLUDE=$(yq '.release.slides_structure.exclude[]' .release-config.yaml)
+          for path in $EXCLUDE; do
+            rm -rf "slides-structure/$path" || true
+          done
+          
+          cd slides-structure && zip -r ../slides-structure.zip .
+
+      - name: Prepare AGHMD Beamer Theme ZIP
+        run: |
+          mkdir -p beamer-theme-aghmd
+          
+          INCLUDE=$(yq '.release.aghmd_beamer_theme.include[]' .release-config.yaml)
+          for path in $INCLUDE; do
+            cp -r "$path" beamer-theme-aghmd/
+          done
+          EXCLUDE=$(yq '.release.aghmd_beamer_theme.exclude[]' .release-config.yaml)
+          for path in $EXCLUDE; do
+            rm -rf "beamer-theme-aghmd/$path" || true
+          done
+          
+          cd beamer-theme-aghmd && zip -r ../beamer-theme-aghmd.zip .
+
+      - name: Create Git tag for combined release
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          TAG="combined-release-v${{ steps.version.outputs.version }}"
+          git tag $TAG
+          git push origin $TAG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release with both ZIPs
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Combined Release - v${{ steps.version.outputs.version }}"
+          tag_name: "combined-release-v${{ steps.version.outputs.version }}"
+          files: |
+            slides-structure.zip
+            beamer-theme-aghmd.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

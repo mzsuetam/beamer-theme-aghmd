@@ -1,0 +1,16 @@
+major: 0
+
+release:
+  slides_structure:
+    include:
+      - csl
+      - filters
+      - justfile
+      - highlight-styles
+      - src/
+    exclude:
+      - src/img/*
+  aghmd_beamer_theme:
+    include:
+      - AGHMD
+      - justfile
