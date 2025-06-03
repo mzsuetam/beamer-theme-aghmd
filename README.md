@@ -57,4 +57,12 @@ The assets linked in the files also should be placed in the `src` directory and 
 
 ### Presentation compilation
 
-To compile the presentation, run the command `just pdf`. The output will be saved in the `out` directory as `slides-latest.pdf`. The source files folder, output folder and the output file name can be changed using the `src`, `outdir` and `out` variables in the `justfile`.
+To compile the presentation, run the command `just pdf`. The output will be saved in the `out` directory as `slides-latest.pdf`.
+
+There are some variables in the `justfile` that can be used to change the setup of the compilation process:
+- `src`: the source files directory (default: `src`)
+- `outdir`: the output directory (default: `out`)
+- `out`: the output file name (default: `slides-latest.pdf`)
+- `bib`: the bibliography file name (default: `src/bibliography.bib`)
+- `csl`: the CSL file name (default: CSL file in `csl` directory)
+- `highlight_style`: the highlight style for code blocks (default: theme file in `highlight-styles` directory)

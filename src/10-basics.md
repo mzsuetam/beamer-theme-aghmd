@@ -86,5 +86,5 @@ import numpy as np
 def f(x):
     return np.sin(x)
 
-x = np.linspace(0, 2*np.pi, 100)
+x = np.linspace(0, 2*np.pi, 100) # this is a very long line that should be broken into multiple lines
 ```
