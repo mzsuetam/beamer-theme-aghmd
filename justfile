@@ -1,4 +1,8 @@
-pdf src="src" out="slides-latest" outdir="out":
+CSL := "../csl/acm-sig-proceedings-long-author-list.csl"
+HIGHLIGHT_STYLE := "../highlight-styles/pygments-bg.theme"
+BIB := "bibliography.bib"
+
+pdf src="src" out="slides-latest" outdir="out" bib=BIB csl=CSL highlight_style=HIGHLIGHT_STYLE:
     cd {{src}} && \
     pandoc -t beamer *.md \
     -o ../{{outdir}}/{{out}}.pdf \
@@ -6,8 +10,9 @@ pdf src="src" out="slides-latest" outdir="out":
     -L ../filters/lang-filter.lua \
     --slide-level=2 \
     --citeproc \
-    --bibliography=bibliography.bib \
-    --csl=../csl/acm-sig-proceedings-long-author-list.csl
+    --bibliography={{bib}} \
+    --csl={{csl}} \
+    --highlight-style={{highlight_style}}
 
 TEXMFHOME := `kpsewhich -var-value=TEXMFHOME`
 

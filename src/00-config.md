@@ -22,4 +22,6 @@ link-citations: true
 section-titles: true
 header-includes:
   - \setbeamertemplate{frametitle continuation}{}
+  - \usepackage{fvextra} # code line breaking
+  - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}} # code line breaking
 ---
