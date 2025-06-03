@@ -21,32 +21,33 @@ jobs:
         run: |
           MAJOR=$(yq '.major' .release-config.yaml)
           DATE=$(date +%Y%m%d)
-          echo "version=${MAJOR}.${DATE}" >> $GITHUB_OUTPUT
+          TIME=$(date +%H%M)
+          echo "version=${MAJOR}.${DATE}.${TIME}" >> $GITHUB_OUTPUT
 
-      - name: Prepare Release 1
+      - name: Prepare Release 1 (Slides Structure)
         run: |
-          mkdir -p release-1
-          cp -r csl release-1/
-          cp -r filters release-1/
-          # cp -r highlight-styles release-1/
-          cp justfile release-1/
-          mkdir -p release-1/src/img
-          cp src/*.md src/bibliography.bib release-1/src/
-          cd release-1 && zip -r ../release-1-${{ steps.version.outputs.version }}.zip .
+          mkdir -p slides-structure
+          cp -r csl slides-structure/
+          cp -r filters slides-structure/
+          # cp -r highlight-styles slides-structure/
+          cp justfile slides-structure/
+          mkdir -p slides-structure/src/img
+          cp src/*.md src/bibliography.bib slides-structure/src/
+          cd slides-structure && zip -r ../slides-structure-${{ steps.version.outputs.version }}.zip .
 
-      - name: Create Git tag for Release 1
+      - name: Create Git tag for Release 1 (Slides Structure)
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git tag release-1-v${{ steps.version.outputs.version }}
-          git push origin release-1-v${{ steps.version.outputs.version }}
+          git tag slides-structure-v${{ steps.version.outputs.version }}
+          git push origin slides-structure-v${{ steps.version.outputs.version }}
 
-      - name: Create GitHub Release 1
+      - name: Create GitHub Release 1 (Slides Structure)
         uses: softprops/action-gh-release@v2
         with:
-          name: "Release 1 - v${{ steps.version.outputs.version }}"
-          tag_name: "release-1-v${{ steps.version.outputs.version }}"
-          files: release-1-${{ steps.version.outputs.version }}.zip
+          name: "Slides Structure - v${{ steps.version.outputs.version }}"
+          tag_name: "slides-structure-v${{ steps.version.outputs.version }}"
+          files: slides-structure-${{ steps.version.outputs.version }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
