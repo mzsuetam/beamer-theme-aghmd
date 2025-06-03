@@ -1,11 +1,11 @@
-name: Auto Create Releases
+name: Auto Create Combined Release
 
 on:
   push:
     branches: [ feature/auto-release ]
 
 jobs:
-  create-releases:
+  create-release:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,17 +14,20 @@ jobs:
 
       - name: Install yq for YAML parsing
         run: |
-          sudo apt-get update && sudo apt-get install -y yq
+          YQ_VERSION=v4.45.1
+          wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
+          chmod +x /usr/local/bin/yq
+
 
       - name: Read major version and generate date-based minor version
         id: version
         run: |
           MAJOR=$(yq '.major' .release-config.yaml)
-          DATE=$(date +%Y%m%d)
+          DATE=$(date +%y%m%d)
           TIME=$(date +%H%M)
           echo "version=${MAJOR}.${DATE}.${TIME}" >> $GITHUB_OUTPUT
 
-      - name: Prepare Release 1 (Slides Structure)
+      - name: Prepare Slides Structure ZIP
         run: |
           mkdir -p slides-structure
           cp -r csl slides-structure/
@@ -35,52 +38,29 @@ jobs:
           cp src/*.md src/bibliography.bib slides-structure/src/
           cd slides-structure && zip -r ../slides-structure-${{ steps.version.outputs.version }}.zip .
 
-      - name: Create Git tag for Release 1 (Slides Structure)
+      - name: Prepare AGHMD Beamer Theme ZIP
+        run: |
+          mkdir -p aghmd-beamer-theme
+          cp -r AGHMD aghmd-beamer-theme/
+          cd aghmd-beamer-theme && zip -r ../aghmd-beamer-theme-${{ steps.version.outputs.version }}.zip .
+
+      - name: Create Git tag for combined release
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git tag slides-structure-v${{ steps.version.outputs.version }}
-          git push origin slides-structure-v${{ steps.version.outputs.version }}
-
-      - name: Create GitHub Release 1 (Slides Structure)
-        uses: softprops/action-gh-release@v2
-        with:
-          name: "Slides Structure - v${{ steps.version.outputs.version }}"
-          tag_name: "slides-structure-v${{ steps.version.outputs.version }}"
-          files: slides-structure-${{ steps.version.outputs.version }}.zip
+          TAG="combined-release-v${{ steps.version.outputs.version }}"
+          git tag $TAG
+          git push origin $TAG
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check for changes in AGHMD directory
-        id: aghmd_check
-        run: |
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^AGHMD/'; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Prepare and Zip Release 2 (AGHMD)
-        # if: steps.aghmd_check.outputs.changed == 'true'
-        run: |
-          mkdir -p release-2
-          cp -r AGHMD release-2/
-          cd release-2 && zip -r ../release-2-${{ steps.version.outputs.version }}.zip .
-
-      - name: Create Git tag for Release 2
-        # if: steps.aghmd_check.outputs.changed == 'true'
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git tag release-2-v${{ steps.version.outputs.version }}
-          git push origin release-2-v${{ steps.version.outputs.version }}
-
-      - name: Create GitHub Release 2
-        # if: steps.aghmd_check.outputs.changed == 'true'
+      - name: Create GitHub Release with both ZIPs
         uses: softprops/action-gh-release@v2
         with:
-          name: "Release 2 - v${{ steps.version.outputs.version }}"
-          tag_name: "release-2-v${{ steps.version.outputs.version }}"
-          files: release-2-${{ steps.version.outputs.version }}.zip
+          name: "Combined Release - v${{ steps.version.outputs.version }}"
+          tag_name: "combined-release-v${{ steps.version.outputs.version }}"
+          files: |
+            slides-structure-${{ steps.version.outputs.version }}.zip
+            aghmd-beamer-theme-${{ steps.version.outputs.version }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
