@@ -1,16 +1,16 @@
-CSL := "../csl/acm-sig-proceedings-long-author-list.csl"
-HIGHLIGHT_STYLE := "../highlight-styles/pygments-bg.theme"
+CSL := "csl/acm-sig-proceedings-long-author-list.csl"
+HIGHLIGHT_STYLE := "highlight-styles/pygments-bg.theme"
 BIB := "bibliography.bib"
 
 pdf src="src" out="slides-latest" outdir="out" bib=BIB csl=CSL highlight_style=HIGHLIGHT_STYLE:
-    cd {{src}} && \
-    pandoc -t beamer *.md \
-    -o ../{{outdir}}/{{out}}.pdf \
+    pandoc -t beamer {{src}}/*.md \
+    -o {{outdir}}/{{out}}.pdf \
     -F pandoc-crossref \
-    -L ../filters/lang-filter.lua \
+    -L filters/lang-filter.lua \
+    --resource-path {{src}} \
     --slide-level=2 \
     --citeproc \
-    --bibliography={{bib}} \
+    --bibliography={{src}}/{{bib}} \
     --csl={{csl}} \
     --highlight-style={{highlight_style}}
 
