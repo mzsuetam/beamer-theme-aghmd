@@ -35,9 +35,11 @@ Final PDF file presenting all the possibilities is saved in the `out` directory 
 
 ## Requirements
 
+- TeX system:
+  - [TeX Live](https://www.tug.org/texlive/)
+  - [texlive-lang-polish](https://packages.debian.org/sid/tex/texlive-lang-polish) package for Polish language support (optional, for Polish language)
 - [Pandoc](https://pandoc.org/) (tested with version 3.6)
 - [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref) (tested with version 3.6)
-- [texlive-lang-polish](https://packages.debian.org/sid/tex/texlive-lang-polish) package for Polish language support (optional, for Polish language)
 - [just](https://github.com/casey/just) (for running commands, optional but recommended)
 
 ## Usage

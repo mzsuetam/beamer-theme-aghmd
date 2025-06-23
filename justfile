@@ -1,8 +1,10 @@
+OUTDIR := "out"
+BIB := "bibliography.bib"
 CSL := "csl/acm-sig-proceedings-long-author-list.csl"
 HIGHLIGHT_STYLE := "highlight-styles/pygments-bg.theme"
-BIB := "bibliography.bib"
-
-pdf src="src" out="slides-latest" outdir="out" bib=BIB csl=CSL highlight_style=HIGHLIGHT_STYLE:
+# Generate PDF slides from Markdown files using Pandoc with Beamer theme AGHMD
+pdf src="src" out="slides-latest" outdir=OUTDIR bib=BIB csl=CSL highlight_style=HIGHLIGHT_STYLE:
+    mkdir -pv {{outdir}}
     pandoc -t beamer {{src}}/*.md \
     -o {{outdir}}/{{out}}.pdf \
     -F pandoc-crossref \
@@ -15,10 +17,12 @@ pdf src="src" out="slides-latest" outdir="out" bib=BIB csl=CSL highlight_style=H
     --highlight-style={{highlight_style}}
 
 TEXMFHOME := `kpsewhich -var-value=TEXMFHOME`
-
+# Installs the AGHMD Beamer theme to the local TeX directory
 install-aghmd:
-    @echo "Copying AGHMD theme to {{TEXMFHOME}}/tex/latex/beamer/ directory..."
-    @mkdir -p {{TEXMFHOME}}/tex/latex/beamer/
-    @cp -r AGHMD {{TEXMFHOME}}/tex/latex/beamer/
+    mkdir -p {{TEXMFHOME}}/tex/latex/beamer/
+    cp -r AGHMD {{TEXMFHOME}}/tex/latex/beamer/
     mktexlsr {{TEXMFHOME}}
-    @echo "Done!"
+
+# Prints the list of available commands with descriptions
+help:
+    just --list
